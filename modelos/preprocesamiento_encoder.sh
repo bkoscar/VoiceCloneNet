@@ -8,11 +8,6 @@ color_echo() {
   esac
 }
 
-# color_echo "green" "*****************************************************************"
-# color_echo "green" "*                                                               *"
-# color_echo "green" "*    Bienvenido al procesamiento de datos de tus audios         *"
-# color_echo "green" "*                                                               *"
-# color_echo "green" "*****************************************************************\n"
 echo  "*****************************************************************"
 echo  "*                                                               *"
 echo  "*    Bienvenido al procesamiento de datos de tus audios         *"
