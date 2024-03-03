@@ -29,7 +29,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/home/oscar/Documents/AudioCloning/modelos/Enviroment"
+set -gx VIRTUAL_ENV "/home/oscar/Documents/AudioCloning/VoiceCloneNet/modelos/Enviroment"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

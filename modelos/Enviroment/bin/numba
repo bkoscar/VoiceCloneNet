@@ -1,4 +1,4 @@
-#!/home/oscar/Documents/AudioCloning/modelos/Enviroment/bin/python
+#!/home/oscar/Documents/AudioCloning/VoiceCloneNet/modelos/Enviroment/bin/python
 # -*- coding: UTF-8 -*-
 from __future__ import print_function, division, absolute_import
 

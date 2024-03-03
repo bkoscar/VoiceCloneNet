@@ -1,30 +1,30 @@
 # VoiceCloneNet
-VoiceCloneNet: Genera voces sintéticas realistas con este modelo de deep learning para clonación de voz.
 
-# Script de preprocesamiento para espectrogramas Mel
+VoiceCloneNet es un modelo de aprendizaje profundo diseñado para generar voces sintéticas realistas mediante el proceso de clonación de voz.
 
-Este script realiza el preprocesamiento de un conjunto de datos, extrayendo espectrogramas de Mel. Los espectrogramas de Mel son representaciones visuales de la frecuencia del sonido que se utilizan comúnmente en tareas de procesamiento de audio.
+## Script de Preprocesamiento para Espectrogramas Mel
 
-## Uso
+Este script facilita el preprocesamiento de un conjunto de datos al extraer espectrogramas de Mel. Los espectrogramas de Mel son representaciones visuales de la frecuencia del sonido, comúnmente utilizadas en tareas de procesamiento de audio.
 
-Para ejecutar el script, utiliza el siguiente comando en tu terminal:
+### Uso
 
-```bash
-./preprocesamiento_encoder.sh <ruta_del_dataset> <nombre_del_dataset> <ruta_de_salida>
-```
-Argumentos
-
-    <ruta_del_dataset>: La ruta al directorio que contiene los archivos de audio del dataset.
-    <nombre_del_dataset>: El nombre del dataset, que se utilizará para identificar los archivos generados.
-    <ruta_de_salida>: La ruta donde se guardarán los espectrogramas de Mel generados.
-
-Funcionalidad
-
-El script realiza las siguientes acciones:
-    Extracción de Espectrogramas de Mel: Utiliza técnicas de procesamiento de audio para convertir los archivos de audio en espectrogramas de Mel.
-    Almacenamiento de Resultados: Guarda los espectrogramas de Mel generados en la ruta de salida especificada.
-
+Para ejecutar el script en un entorno Ubuntu, utiliza el siguiente comando en tu terminal:
 
 ```bash
-./preprocesamiento_encoder.sh ./datos/ mi_dataset ./espectrogramas_mel
+./preprocesamiento_encoder.sh
 ```
+
+### Requisitos
+
+Asegúrate de tener instalado Python 3.9 en tu sistema y el entorno debes llamarlo Enviroment. Puedes instalar las dependencias necesarias ejecutando el siguiente comando:
+
+```bash
+python3.9 -m venv Enviroment
+source venv/bin/activate
+pip install -r requirements.txt
+```
+### Funcionalidad
+
+El script preprocesamiento_encoder.sh puede ejecutarse sin argumentos para realizar el preprocesamiento con valores predeterminados. Realiza las siguientes acciones:
+1. Extracción de Espectrogramas de Mel: Utiliza técnicas de procesamiento de audio para convertir los archivos de audio en espectrogramas de Mel.
+2. Almacenamiento de Resultados: Guarda los espectrogramas de Mel generados en la ruta predeterminada.

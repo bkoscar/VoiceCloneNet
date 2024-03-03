@@ -1,4 +1,4 @@
-#!/home/oscar/Documents/AudioCloning/modelos/Enviroment/bin/python
+#!/home/oscar/Documents/AudioCloning/VoiceCloneNet/modelos/Enviroment/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
