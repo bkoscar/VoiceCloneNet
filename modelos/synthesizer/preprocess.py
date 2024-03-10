@@ -63,7 +63,8 @@ def preprocess_speaker(speaker_dir, out_dir: Path, skip_existing: bool, hparams,
                     if hparams.rescale:
                         wav = wav / np.abs(wav).max() * hparams.rescaling_max
                     # Get the corresponding text
-                    text_fpath = wav_fpath.parent / f"{wav_fpath.stem.split('-')[0]}-{wav_fpath.stem.split('-')[1]}.trans.txt"
+                    # text_fpath = wav_fpath.parent / f"{wav_fpath.stem.split('-')[0]}-{wav_fpath.stem.split('-')[1]}.trans.txt" # Librispeech format
+                    text_fpath = wav_fpath.parent / "transcriptions.txt"
     #                 if not text_fpath.exists():
     #                     # Check for .normalized.txt (LibriTTS)
     #                     text_fpath = wav_fpath.with_suffix(".txt")               
@@ -72,7 +73,6 @@ def preprocess_speaker(speaker_dir, out_dir: Path, skip_existing: bool, hparams,
                         text = "".join([line for line in text_file])
                         text = text.replace("\"", "")
                         text = text.strip()
-                        # print(text)
                     # Process the utterance
                     metadata.append(process_utterance(wav, text, out_dir, str(wav_fpath.with_suffix("").name),skip_existing, hparams))
         else:
@@ -97,9 +97,10 @@ def preprocess_speaker(speaker_dir, out_dir: Path, skip_existing: bool, hparams,
                 wavs, texts = split_on_silences(wav_fpath, words, end_times, hparams)
                 for i, (wav, text) in enumerate(zip(wavs, texts)):
                     sub_basename = "%s_%02d" % (wav_fname, i)
-                    metadata.append(process_utterance(wav, text, out_dir, sub_basename,
-                                                      skip_existing, hparams))
-                    
+                    metadata.append(process_utterance(wav, text, out_dir, sub_basename, skip_existing, hparams))
+    # print(metadata) 
+    # replace_metadata(metadata)   
+    # print(metadata)            
     return replace_metadata(metadata)
     # return [m for m in metadata if m is not None]
 
@@ -254,40 +255,7 @@ def create_embeddings(synthesizer_root: Path, encoder_model_fpath: Path, n_proce
 
 
     
-    
-# def replace_metadata(metadata):
-#     global audio_path
-#     global text_path
-#     new_metadata = []
-#     data_dict = {}
-#     unique_audio_paths = set()  # Conjunto para almacenar claves únicas
-#     for entry in metadata:
-#         audio_file, mel_file, embed_file, duration, num_frames, transcription = entry
-#         # Divide la transcripción en líneas y toma solo la línea que corresponde al archivo de audio actual
-#         transcriptions = transcription.split("\n")
-#         new_transcription = "" 
-#         for t in transcriptions:
-#             t_path = t.replace(" ", "/")
-#             audio_path = t_path.split("/")[0]
-#             t_parts = t_path.split("/")
-#             if len(t_parts) > 1:  
-#                 new_transcription += "/" + "/".join(t_parts[1:]) + "\n"
-#                 text_path = Path("/" + "/".join(t_parts[1:]))
-#                 audio_name = "audio-" + audio_path + ".npy"
-#                 text_name = str(text_path).replace("/", " ")
-#                 text_name = text_name.strip()
-#                 # Utilizar el conjunto para evitar duplicados
-#                 if audio_path not in unique_audio_paths:
-#                     data_dict[audio_name] = text_name
-#                     unique_audio_paths.add(audio_name)
-#     for entry in metadata:
-#         audio_file, mel_file, embed_file, duration, num_frames, transcription = entry
-#         if audio_file in data_dict:
-#             new_entry = (audio_file, mel_file, embed_file, duration, num_frames, data_dict[audio_file])
-#             new_metadata.append(new_entry)
-    
-#     new_metadata = list(set(new_metadata))
-#     return new_metadata
+
 
 def replace_metadata(metadata):
     global audio_path
@@ -305,11 +273,13 @@ def replace_metadata(metadata):
         for t in transcriptions:
             t_path = t.replace(" ", "/")
             audio_path = t_path.split("/")[0]
-            t_parts = t_path.split("/")
+            t_parts = t_path.split("//")
             if len(t_parts) > 1:  
                 new_transcription += "/" + "/".join(t_parts[1:]) + "\n"
                 text_path = Path("/" + "/".join(t_parts[1:]))
                 audio_name = "audio-" + audio_path + ".npy"
+                audio_name = audio_name.split(".")
+                audio_name = audio_name[0] + "." + audio_name[2]
                 text_name = str(text_path).replace("/", " ")
                 text_name = text_name.strip()
                 # Utilizar el conjunto para evitar duplicados
@@ -323,6 +293,5 @@ def replace_metadata(metadata):
         if audio_file in data_dict:
             new_entry = (audio_file, mel_file, embed_file, duration, num_frames, data_dict[audio_file])
             new_metadata.append(new_entry)
-
     new_metadata = list(set(new_metadata))
     return new_metadata
